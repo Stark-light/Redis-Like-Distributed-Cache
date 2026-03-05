@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  node1:
+    build: .
+    ports:
+      - "8081:8081"
+    command: --port 8081 --nodeId node-1
+
+  node2:
+    build: .
+    ports:
+      - "8082:8082"
+    command: --port 8082 --nodeId node-2
+
+  node3:
+    build: .
+    ports:
+      - "8083:8083"
+    command: --port 8083 --nodeId node-3
