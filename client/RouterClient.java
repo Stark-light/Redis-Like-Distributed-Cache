@@ -37,3 +37,25 @@ public class RouterClient {
         }
     }
 }
+
+public void replicatedSet(String key, String value) throws Exception {
+
+    List<CacheNode> replicas = replicationManager.getReplicaNodes(key);
+
+    for (CacheNode node : replicas) {
+
+        try(Socket socket = new Socket(node.getHost(), node.getPort())) {
+
+            BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(socket.getOutputStream())
+            );
+
+            writer.write("SET " + key + " " + value + "\n");
+            writer.flush();
+
+        } catch(Exception e) {
+
+            System.out.println("Replica failed: " + node.getNodeId());
+        }
+    }
+}
